@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GoalCalories - Dashboard</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Top Navigation Bar */
+        /* Top Navigation Bar */
+.top-nav {
+    width: 100%;
+    background-color: #007BFF;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    position: fixed;
+    top: 0;
+    z-index: 10;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Logo Styling */
+.top-nav .logo {
+    font-size: 1.8em;
+    font-weight: bold;
+}
+
+/* User Info Styling */
+.top-nav .user-info {
+    display: flex;
+    align-items: center;
+    gap: 30px; /* Space out profile and logout links */
+}
+
+/* User Info Text (Username) */
+.top-nav .user-info span {
+    margin-right: 20px;
+    font-size: 1.1em;
+}
+
+/* Links Styling */
+.top-nav .user-info a {
+    color: white;
+    text-decoration: none;
+    font-size: 1.1em;
+    padding: 10px 20px;  /* Add padding to make the link look more like a button */
+    border-radius: 5px;
+    background-color: #0056b3; /* Add a background to make the logout button prominent */
+    transition: background-color 0.3s ease;
+}
+
+/* Hover Effect for Links */
+.top-nav .user-info a:hover {
+    background-color: #003d73;  /* Darker shade for hover effect */
+}
+
+
+        /* Layout */
+        .container {
+            display: flex;
+            margin-top: 80px; /* Adjusted to avoid overlap with the top navigation */
+            height: 100%;
+            overflow: hidden;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            width: 250px;
+            background-color: #007BFF;
+            color: white;
+            padding: 30px 20px;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            position: fixed;
+            top: 60px;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .sidebar h2 {
+            margin-bottom: 30px;
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+            margin-top: 20px;
+        }
+
+        .sidebar ul li {
+            margin: 10px 0;
+        }
+
+        .sidebar ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.1em;
+            transition: all 0.3s ease;
+            padding: 10px 15px;
+            border-radius: 5px;
+            display: block;
+        }
+
+        .sidebar ul li a:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 270px;
+            padding: 30px 40px;
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .main-content h1 {
+            text-align: center;
+            color: #007BFF;
+            font-size: 2.2em;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .section {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            margin: 20px 0;
+            transition: all 0.3s ease;
+        }
+
+        .section h2 {
+            font-size: 1.6em;
+            color: #007BFF;
+            margin-bottom: 20px;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .section h2:hover {
+            color: #0056b3;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 12px;
+            font-size: 1.1em;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-sizing: border-box;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            border-color: #007BFF;
+            outline: none;
+        }
+
+        button {
+            padding: 12px 20px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 8px;
+            background-color: #007BFF;
+            color: white;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+
+        /* Section Transitions */
+        .section:not(:first-child) {
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        /* Report & Recommendation Sections */
+        .report p, .recommendations ul {
+            font-size: 1.2em;
+        }
+
+        .recommendations ul {
+            list-style-type: disc;
+            margin-left: 20px;
+        }
+
+        .recommendations ul li {
+            margin-bottom: 10px;
+        }
+
+        .report p {
+            margin-bottom: 20px;
+        }
+
+        /* Media Queries for responsiveness */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                position: relative;
+                top: 0;
+                box-shadow: none;
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Navigation -->
+    <div class="top-nav">
+        <div class="logo">GoalCalories</div>
+        <div class="user-info">
+            <span>Welcome, User!</span>
+            <a href="#">Profile</a>
+            <a href="#">Logout</a>
+        </div>
+    </div>
+
+    <!-- Sidebar and Main Content -->
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <h2>Menu</h2>
+            <ul>
+                <li><a href="#" onclick="showSection('calculate-calories')">Calculate Calories</a></li>
+                <li><a href="#" onclick="showSection('daily-calories')">Food Calorie Tracker</a></li>
+                <li><a href="#" onclick="showSection('report')">Calorie Reports</a></li>
+                <li><a href="#" onclick="showSection('recommendations')">Recommendations</a></li>
+            </ul>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <h1>Welcome to Your Dashboard</h1>
+
+            <!-- Calculate Daily Calorie Needs -->
+            <div class="section" id="calculate-calories">
+                <h2>Calculate Your Daily Calorie Needs</h2>
+                <form onsubmit="calculateCalories(event)">
+                    <div class="form-group">
+                        <label for="age">Age:</label>
+                        <input type="number" id="age" name="age" placeholder="Enter your age">
+                    </div>
+                    <div class="form-group">
+                        <label for="gender">Gender:</label>
+                        <select id="gender" name="gender">
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="height">Height (cm):</label>
+                        <input type="number" id="height" name="height" placeholder="Enter your height in cm">
+                    </div>
+                    <div class="form-group">
+                        <label for="weight">Weight (kg):</label>
+                        <input type="number" id="weight" name="weight" placeholder="Enter your weight in kg">
+                    </div>
+                    <button type="submit">Calculate</button>
+                </form>
+                <p id="calorie-result"></p>
+            </div>
+
+            <!-- Other Sections -->
+            <div class="section" id="daily-calories">
+                <h2>Daily Food Calorie Tracker</h2>
+                <!-- Daily Tracker Form -->
+            </div>
+
+            <div class="section" id="report">
+                <h2>Your Daily Report</h2>
+                <!-- Reports Section -->
+            </div>
+
+            <div class="section" id="recommendations">
+                <h2>Recommendations</h2>
+                <!-- Recommendations Section -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Function to show specific sections
+        function showSection(sectionId) {
+            document.querySelectorAll('.section').forEach(function(section) {
+                section.classList.remove('active');
+            });
+            document.getElementById(sectionId).classList.add('active');
+        }
+
+        // Function to calculate daily calorie needs
+        function calculateCalories(event) {
+            event.preventDefault();
+            const age = document.getElementById('age').value;
+            const height = document.getElementById('height').value;
+            const weight = document.getElementById('weight').value;
+            const gender = document.getElementById('gender').value;
+
+            // Simple calculation logic (can be refined with a proper formula)
+            let bmr;
+            if (gender === 'male') {
+                bmr = 66 + (13.75 * weight) + (5 * height) - (6.75 * age);
+            } else {
+                bmr = 655 + (9.56 * weight) + (1.85 * height) - (4.68 * age);
+            }
+
+            const calorieNeeds = Math.round(bmr * 1.2); // Assuming sedentary lifestyle
+            document.getElementById('calorie-result').textContent = `Your daily calorie needs are: ${calorieNeeds} calories.`;
+        }
+    </script>
+</body>
+</html>
