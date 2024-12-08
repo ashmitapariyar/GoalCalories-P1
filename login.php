@@ -25,23 +25,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit();
         } else {
             $_SESSION['msg'] = "Invalid email or password!";
+            header("Location: login.html");
+
         }
     } else {
         $_SESSION['msg'] = "Invalid email or password!";
+        header("Location: login.html");
+
     }
 }
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Failed</title>
-</head>
-<body>
-    <h1>Login Error</h1>
-    <p><?php echo isset($_SESSION['msg']) ? $_SESSION['msg'] : 'Unknown error'; ?></p>
-    <a href="login.html">Go Back</a>
-</body>
-</html>

@@ -132,5 +132,29 @@
             <p class="register-text">Don’t have an account? <a href="registration.html">Register!</a></p>
         </div>
     </div>
+    <script>
+        function validateLoginForm(event) {
+            const email = document.getElementById("email").value.trim();
+            const password = document.getElementById("password").value.trim();
+
+            if (email === "") {
+                alert("Please enter your email.");
+                event.preventDefault(); // Prevent form submission
+                return false;
+            } else if (!/^\S+@\S+\.\S+$/.test(email)) {
+                alert("Please enter a valid email address.");
+                event.preventDefault();
+                return false;
+            }
+
+            if (password === "") {
+                alert("Please enter your password.");
+                event.preventDefault(); // Prevent form submission
+                return false;
+            }
+
+            return true; // Allow form submission
+        }
+    </script>
 </body>
 </html>

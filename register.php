@@ -37,4 +37,4 @@ if (!$res) {
 // Close the connection
 mysqli_close($con);
 
-?>
+?> 

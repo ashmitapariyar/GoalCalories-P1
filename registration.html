@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -114,7 +112,8 @@
         .error-message {
             color: red;
             font-size: 0.9em;
-            margin-bottom: 10px;
+            margin-top: 5px;
+            display: block;
         }
     </style>
 </head>
@@ -128,52 +127,101 @@
     <div class="registration-container">
         <div class="registration-box">
             <h2>Create Your Account</h2>
-            <?php if ($error): ?>
-                <p class="error-message"><?php echo htmlspecialchars($error); ?></p>
-            <?php endif; ?>
-            <form action="register.php" method="POST">
+            <form action="register.php" method="post" id="registrationForm">
                 <div class="form-group">
                     <label for="fullname">Full Name</label>
                     <input type="text" id="fullname" name="fullname" placeholder="Enter your full name" required>
+                    <span class="error-message" id="fullname-error"></span>
                 </div>
                 <div class="form-group">
                     <label for="phone_number">Phone Number</label>
                     <input type="tel" id="phone_number" name="phone_number" placeholder="Enter your phone number" required>
+                    <span class="error-message" id="phone_number-error"></span>
                 </div>
                 <div class="form-group">
                     <label for="email">Email</label>
                     <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                    <span class="error-message" id="email-error"></span>
                 </div>
                 <div class="form-group">
                     <label for="password">Password</label>
                     <input type="password" id="password" name="password" placeholder="Create a password" required>
+                    <span class="error-message" id="password-error"></span>
                 </div>
                 <div class="form-group">
                     <label for="confirm_password">Confirm Password</label>
                     <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirm your password" required>
+                    <span class="error-message" id="confirm_password-error"></span>
                 </div>
                 <button type="submit">Register</button>
             </form>
-            
             <div class="login-text">
                 Already have an account? <a href="login.html">Login here</a>
             </div>
         </div>
     </div>
-
+   
     <script>
-        // JavaScript form validation to check if passwords match
-        function validateForm() {
-            var password = document.getElementById("password").value;
-            var confirm_password = document.getElementById("confirm_password").value;
-
-            if (password !== confirmPassword) {
-                alert("Passwords do not match. Please try again.");
-                return false;
-            }
-
-            return true;
-        }
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.getElementById('registrationForm');
+    
+            form.addEventListener('submit', function (event) {
+                // Prevent form submission initially
+                event.preventDefault();
+    
+                // Clear previous errors
+                document.querySelectorAll('.error-message').forEach(error => error.textContent = '');
+    
+                // Retrieve form field values
+                const fullname = document.getElementById('fullname').value.trim();
+                const phoneNumber = document.getElementById('phone_number').value.trim();
+                const email = document.getElementById('email').value.trim();
+                const password = document.getElementById('password').value.trim();
+                const confirmPassword = document.getElementById('confirm_password').value.trim();
+    
+                // Regular expressions for validation
+                const namePattern = /^[A-Za-z\s]+$/; // Letters and spaces only
+                const phonePattern = /^9\d{9}$/; // Must start with 9 and have 10 digits
+                const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/; // Valid email
+    
+                let isValid = true;
+    
+                // Full Name validation
+                if (!namePattern.test(fullname)) {
+                    document.getElementById('fullname-error').textContent = 'Invalid Name: Only letters and spaces allowed.';
+                    isValid = false;
+                }
+    
+                // Phone Number validation
+                if (!phonePattern.test(phoneNumber)) {
+                    document.getElementById('phone_number-error').textContent = 'Invalid Phone Number: Must start with 9 and have 10 digits.';
+                    isValid = false;
+                }
+    
+                // Email validation
+                if (!emailPattern.test(email)) {
+                    document.getElementById('email-error').textContent = 'Invalid Email: Enter a valid email address.';
+                    isValid = false;
+                }
+    
+                // Password validation (8-15 characters)
+                if (password.length < 8 || password.length > 15) {
+                    document.getElementById('password-error').textContent = 'Password must be between 8 and 15 characters.';
+                    isValid = false;
+                }
+    
+                // Confirm Password validation
+                if (password !== confirmPassword) {
+                    document.getElementById('confirm_password-error').textContent = 'Passwords do not match.';
+                    isValid = false;
+                }
+    
+                // Submit the form if all validations pass
+                if (isValid) {
+                    form.submit();
+                }
+            });
+        });
     </script>
 </body>
 </html>
