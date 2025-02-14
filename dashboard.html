@@ -4,123 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GoalCalories Dashboard</title>
-    <style>
-        /* General Styles */
-
-        body {
-            font-family: 'Arial', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f8f9fa;
-            color: #333;
-        }
-        
-
-        .top-nav {
-            background-color: #007BFF;
-            color: white;
-            padding: 15px;
-            text-align: center;
-        }
-
-        .container {
-            display: flex;
-            height: calc(100vh - 60px);
-        }
-
-        .sidebar {
-            width: 250px;
-            background-color: #0056b3;
-            color: white;
-            padding: 20px;
-        }
-
-        .sidebar ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        .sidebar ul li {
-            margin: 15px 0;
-        }
-
-        .sidebar ul li a {
-            color: white;
-            text-decoration: none;
-            padding: 10px 15px;
-            display: block;
-            border-radius: 5px;
-        }
-
-        .sidebar ul li a:hover {
-            background-color: #003d73;
-        }
-
-        .main-content {
-            flex: 1;
-            padding: 20px;
-            overflow-y: auto;
-        }
-
-        .section {
-            display: none;
-        }
-
-        .section.active {
-            display: block;
-        }
-
-        h2 {
-            color: #007BFF;
-            font-size: 1.5em;
-            margin-bottom: 10px;
-        }
-
-        label {
-            display: block;
-            margin: 10px 0 5px;
-            font-weight: bold;
-        }
-
-        input, button, select {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 15px;
-            font-size: 1em;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-
-        button {
-            background-color: #007BFF;
-            color: white;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background-color: #0056b3;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-        }
-
-        table, th, td {
-            border: 1px solid #ddd;
-        }
-
-        th, td {
-            text-align: left;
-            padding: 8px;
-        }
-
-        th {
-            background-color: #007BFF;
-            color: white;
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css"> <!-- Linking to the external CSS file -->
 </head>
 <body>
     <div class="top-nav">
@@ -173,81 +57,125 @@
                 <p id="calorie-result"></p>
             </div>
 
-            <!-- Food Calorie Tracker -->
-            <div class="section" id="food-calorie-tracker">
-                <h2>Food Calorie Tracker</h2>
-                <form onsubmit="trackFoodCalories(event)">
-                    <h3>Breakfast</h3>
-                    <label>Tea (30 cal per cup):</label>
-                    <input type="number" data-calories="30" id="tea" placeholder="Quantity (cups)">
 
-                    <label>Egg (70 cal per egg):</label>
-                    <input type="number" data-calories="70" id="egg" placeholder="Quantity">
 
-                    <label>Bread (80 cal per slice):</label>
-                    <input type="number" data-calories="80" id="bread" placeholder="Quantity (slices)">
 
-                    <label>Gram (100 cal per serving):</label>
-                    <input type="number" data-calories="100" id="gram" placeholder="Quantity (serving)">
 
-                    <label>Milk (150 cal per glass):</label>
-                    <input type="number" data-calories="150" id="milk" placeholder="Quantity (glasses)">
 
-                    <h3>Lunch</h3>
-                    <label>Rice (200 cal per cup):</label>
-                    <input type="number" data-calories="200" id="rice" placeholder="Quantity (cups)">
 
-                    <label>Daal (100 cal per cup):</label>
-                    <input type="number" data-calories="100" id="daal" placeholder="Quantity (cups)">
+    <!-- Food Calorie Tracker -->
+    <div class="section" id="food-calorie-tracker">
+        <h2>Food Calorie Tracker</h2>
+        <form onsubmit="trackFoodCalories(event)">
+            <h3>Breakfast</h3>
+            <label>Tea (30 cal per cup):</label>
+            <input type="number" data-calories="30" id="tea" placeholder="Quantity (cups)">
 
-                    <label>Vegetables (150 cal per serving):</label>
-                    <input type="number" data-calories="150" id="vegetables" placeholder="Quantity (serving)">
+            <label>Egg (70 cal per egg):</label>
+            <input type="number" data-calories="70" id="egg" placeholder="Quantity">
 
-                    <label>Pickles (50 cal per serving):</label>
-                    <input type="number" data-calories="50" id="pickles" placeholder="Quantity (serving)">
+            <label>Bread (80 cal per slice):</label>
+            <input type="number" data-calories="80" id="bread" placeholder="Quantity (slices)">
 
-                    <label>Non-Veg items (300 cal per serving):</label>
-                    <input type="number" data-calories="300" id="non-veg-lunch" placeholder="Quantity (serving)">
+            <label>Gram (100 cal per serving):</label>
+            <input type="number" data-calories="100" id="gram" placeholder="Quantity (serving)">
 
-                    <h3>Snacks</h3>
-                    <label>Mo:Mo (350 cal per plate):</label>
-                    <input type="number" data-calories="350" id="momo" placeholder="Quantity (plates)">
+            <label>Milk (150 cal per glass):</label>
+            <input type="number" data-calories="150" id="milk" placeholder="Quantity (glasses)">
 
-                    <label>Chips (150 cal per pack):</label>
-                    <input type="number" data-calories="150" id="chips" placeholder="Quantity (pack)">
+            <h3>Lunch</h3>
+            <label>Rice (200 cal per cup):</label>
+            <input type="number" data-calories="200" id="rice" placeholder="Quantity (cups)">
 
-                    <label>Samosa (200 cal per piece):</label>
-                    <input type="number" data-calories="200" id="samosa" placeholder="Quantity (piece)">
+            <label>Daal (100 cal per cup):</label>
+            <input type="number" data-calories="100" id="daal" placeholder="Quantity (cups)">
 
-                    <label>Noodles (250 cal per serving):</label>
-                    <input type="number" data-calories="250" id="noodles" placeholder="Quantity (serving)">
+            <label>Vegetables (150 cal per serving):</label>
+            <input type="number" data-calories="150" id="vegetables" placeholder="Quantity (serving)">
 
-                    <label>Roti (120 cal per piece):</label>
-                    <input type="number" data-calories="120" id="roti" placeholder="Quantity (piece)">
+            <label>Pickles (50 cal per serving):</label>
+            <input type="number" data-calories="50" id="pickles" placeholder="Quantity (serving)">
 
-                    <h3>Dinner</h3>
-                    <label>Rice (200 cal per cup):</label>
-                    <input type="number" data-calories="200" id="dinner-rice" placeholder="Quantity (cups)">
+            <label>Non-Veg items (300 cal per serving):</label>
+            <input type="number" data-calories="300" id="non-veg-lunch" placeholder="Quantity (serving)">
 
-                    <label>Daal (100 cal per cup):</label>
-                    <input type="number" data-calories="100" id="dinner-daal" placeholder="Quantity (cups)">
+            <h3>Snacks</h3>
+            <label>Mo:Mo (350 cal per plate):</label>
+            <input type="number" data-calories="350" id="momo" placeholder="Quantity (plates)">
 
-                    <label>Curry (250 cal per serving):</label>
-                    <input type="number" data-calories="250" id="curry" placeholder="Quantity (serving)">
+            <label>Chips (150 cal per pack):</label>
+            <input type="number" data-calories="150" id="chips" placeholder="Quantity (pack)">
 
-                    <label>Chicken (300 cal per serving):</label>
-                    <input type="number" data-calories="300" id="chicken" placeholder="Quantity (serving)">
+            <label>Samosa (200 cal per piece):</label>
+            <input type="number" data-calories="200" id="samosa" placeholder="Quantity (piece)">
 
-                    <button type="submit">Calculate Total Calories</button>
-                </form>
-                <p id="food-calorie-result"></p>
-            </div>
+            <label>Noodles (250 cal per serving):</label>
+            <input type="number" data-calories="250" id="noodles" placeholder="Quantity (serving)">
 
-            <!-- Report Section -->
-            <div class="section" id="report">
-                <h2>Daily Report</h2>
-                <p id="report-output">Click "Generate Report" to view your daily summary.</p>
-            </div>
+            <label>Roti (120 cal per piece):</label>
+            <input type="number" data-calories="120" id="roti" placeholder="Quantity (piece)">
+
+            <h3>Dinner</h3>
+            <label>Rice (200 cal per cup):</label>
+            <input type="number" data-calories="200" id="dinner-rice" placeholder="Quantity (cups)">
+
+            <label>Daal (100 cal per cup):</label>
+            <input type="number" data-calories="100" id="dinner-daal" placeholder="Quantity (cups)">
+
+            <label>Curry (250 cal per serving):</label>
+            <input type="number" data-calories="250" id="curry" placeholder="Quantity (serving)">
+
+            <label>Chicken (300 cal per serving):</label>
+            <input type="number" data-calories="300" id="chicken" placeholder="Quantity (serving)">
+
+            <button type="submit">Calculate Total Calories</button>
+        </form>
+        <p id="food-calorie-result"></p>
+    </div>
+
+
+
+
+
+
+
+
+
+<!-- Report Section -->
+<div class="section" id="report">
+    <h2>Daily Report</h2>
+
+   <!-- Buttons Section -->
+<div>
+    <button id="store-btn">Store</button>
+    <button id="display-btn">Display</button>
+</div>
+
+<!-- Table Section -->
+<div>
+    <h2>Calorie Data</h2>
+    <table border="1" id="calorie-table">
+        <thead>
+            <tr>
+                <th>Breakfast Calories</th>
+                <th>Lunch Calories</th>
+                <th>Snack Calories</th>
+                <th>Dinner Calories</th>
+                <th>Total Calories</th>
+                <th>Daily Calories</th>
+                <th>Surplus</th>
+                <th>Deficit</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</div>
+
+    <!-- <p id="">Click "Generate Report" to view your daily summary.</p> Added this element -->
+</div>
+
+
 
             <!-- Recommendations -->
             <div class="section" id="recommendations">
@@ -256,72 +184,6 @@
             </div>
         </div>
     </div>
-
-    <script>
-        // Function to show active section
-        function showSection(sectionId) {
-            // Hide all sections
-            let sections = document.querySelectorAll('.section');
-            sections.forEach(section => section.classList.remove('active'));
-
-            // Show the clicked section
-            document.getElementById(sectionId).classList.add('active');
-        }
-
-        // Function to calculate daily calorie requirement
-        function calculateCalories(event) {
-            event.preventDefault();
-            let age = document.getElementById('age').value;
-            let weight = document.getElementById('weight').value;
-            let height = document.getElementById('height').value;
-            let gender = document.getElementById('gender').value;
-
-            let BMR = 10 * weight + 6.25 * height - 5 * age;
-            if (gender === 'male') {
-                BMR += 5;
-            } else if (gender === 'female') {
-                BMR -= 161;
-            }
-
-            let dailyCalories = BMR * 1.2; // Sedentary activity multiplier
-
-            document.getElementById('calorie-result').textContent = `Your daily calorie requirement is ${Math.round(dailyCalories)} calories.`;
-        }
-
-        // Function to track food calorie intake
-        function trackFoodCalories(event) {
-            event.preventDefault();
-
-            let foodItems = [
-                { id: 'tea', calories: 30 },
-                { id: 'egg', calories: 70 },
-                { id: 'bread', calories: 80 },
-                { id: 'gram', calories: 100 },
-                { id: 'milk', calories: 150 },
-                { id: 'rice', calories: 200 },
-                { id: 'daal', calories: 100 },
-                { id: 'vegetables', calories: 150 },
-                { id: 'pickles', calories: 50 },
-                { id: 'non-veg-lunch', calories: 300 },
-                { id: 'momo', calories: 350 },
-                { id: 'chips', calories: 150 },
-                { id: 'samosa', calories: 200 },
-                { id: 'noodles', calories: 250 },
-                { id: 'roti', calories: 120 },
-                { id: 'dinner-rice', calories: 200 },
-                { id: 'dinner-daal', calories: 100 },
-                { id: 'curry', calories: 250 },
-                { id: 'chicken', calories: 300 },
-            ];
-
-            let totalCalories = 0;
-            foodItems.forEach(item => {
-                let quantity = document.getElementById(item.id).value || 0;
-                totalCalories += item.calories * quantity;
-            });
-
-            document.getElementById('food-calorie-result').textContent = `You have consumed ${totalCalories} calories today.`;
-        }
-    </script>
+    <script src="dashboard.js"></script>
 </body>
 </html>

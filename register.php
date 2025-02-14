@@ -18,11 +18,12 @@ if ($password !== $confirm_password) {
     die("Passwords do not match!");
 }
 
-
+// Hash the password for secure storage
+$hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
 // Insert into the database
-$sql = "INSERT INTO registration (fullname, phonenumber, email, password,confirmpassword) 
-        VALUES ('$fullname', '$phone_number', '$email', '$password','$confirm_password' )";
+$sql = "INSERT INTO registration (fullname, phonenumber, email, password, confirmpassword) 
+        VALUES ('$fullname', '$phone_number', '$email', '$hashed_password', '$confirm_password')";
 
 $res = mysqli_query($con, $sql);
 
@@ -36,5 +37,4 @@ if (!$res) {
 
 // Close the connection
 mysqli_close($con);
-
-?> 
+?>
