@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - GoalCalories</title>
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+<body>
+    <!-- Top Navigation -->
+    <nav class="dashboard-nav">
+        <div class="nav-brand">
+            <span class="brand-icon">🎯</span>
+            <span class="brand-name">GoalCalories</span>
+        </div>
+        <div class="nav-user">
+            <div class="user-info">
+                <span class="user-greeting">Welcome back,</span>
+                <span class="user-name" id="userName">User</span>
+            </div>
+            <a href="../index.php" class="btn-logout">Logout</a>
+        </div>
+    </nav>
+
+    <div class="dashboard-container">
+        <!-- Sidebar Navigation -->
+        <aside class="dashboard-sidebar">
+            <div class="sidebar-menu">
+                <a href="#" class="menu-item active" data-section="calorie-calculator">
+                    <span class="menu-icon">🧮</span>
+                    <span class="menu-text">BMR Calculator</span>
+                </a>
+                <a href="#" class="menu-item" data-section="food-calorie-tracker">
+                    <span class="menu-icon">🍽️</span>
+                    <span class="menu-text">Food Tracker</span>
+                </a>
+                <a href="#" class="menu-item" data-section="report">
+                    <span class="menu-icon">📋</span>
+                    <span class="menu-text">Reports</span>
+                </a>
+                <a href="#" class="menu-item" data-section="7day-analysis">
+                    <span class="menu-icon">📈</span>
+                    <span class="menu-text">7-Day Analysis</span>
+                </a>
+                <a href="#" class="menu-item" data-section="recommendations">
+                    <span class="menu-icon">💡</span>
+                    <span class="menu-text">Insights</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="dashboard-main">
+            <!-- BMR Calculator Section -->
+            <section class="content-section active" id="calorie-calculator">
+                <div class="section-header">
+                    <h1>BMR Calculator</h1>
+                    <p>Calculate your daily calorie requirement based on your body metrics</p>
+                </div>
+                
+                <div class="content-card">
+                    <form onsubmit="calculateCalories(event)" class="modern-form">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="age">Age</label>
+                                <input type="number" id="age" placeholder="25" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="gender">Gender</label>
+                                <select id="gender" required>
+                                    <option value="">Select</option>
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="weight">Weight (kg)</label>
+                                <input type="number" id="weight" placeholder="70" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="height">Height (cm)</label>
+                                <input type="number" id="height" placeholder="170" required>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn-primary">Calculate BMR</button>
+                    </form>
+                    <div id="calorie-result" class="result-display"></div>
+                </div>
+            </section>
+
+            <!-- Food Tracker Section -->
+            <section class="content-section" id="food-calorie-tracker">
+                <div class="section-header">
+                    <h1>Daily Food Tracker</h1>
+                    <p>Track your meals and calculate total calorie intake</p>
+                </div>
+
+                <div class="content-card">
+                    <form onsubmit="trackFoodCalories(event)" class="modern-form">
+                        <!-- Breakfast -->
+                        <div class="meal-section">
+                            <h3 class="meal-title">🌅 Breakfast</h3>
+                            <div class="form-grid-compact">
+                                <div class="form-group">
+                                    <label>Tea <span class="cal-label">30 cal/cup</span></label>
+                                    <input type="number" data-calories="30" id="tea" placeholder="0" min="0">
+                                </div>
+                                <div class="form-group">
+                                    <label>Egg <span class="cal-label">70 cal/egg</span></label>
+                                    <input type="number" data-calories="70" id="egg" placeholder="0" min="0">
+                                </div>
+                                <div class="form-group">
+                                    <label>Bread <span class="cal-label">80 cal/slice</span></label>
+                                    <input type="number" data-calories="80" id="bread" placeholder="0" min="0">
+                                </div>
+                                <div class="form-group">
+                                    <label>Gram <span class="cal-label">100 cal/serving</span></label>
+                                    <input type="number" data-calories="100" id="gram" placeholder="0" min="0">
+                                </div>
+                                <div class="form-group">
+                                    <label>Milk <span class="cal-label">150 cal/glass</span></label>
+                                    <input type="number" data-calories="150" id="milk" placeholder="0" min="0">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Lunch -->
+                        <div class="meal-section">
+                            <h3 class="meal-title">☀️ Lunch</h3>
+                            <div class="form-grid-compact">
+                                <div class="form-group">
+                                    <label>Rice <span class="cal-label">200 cal/cup</span></label>
+                                    <input type="number" data-calories="200" id="rice" placeholder="0" min="0">
+                                </div>
+                                <div class="form-group">
+                                    <label>Daal <span class="cal-label">100 cal/cup</span></label>
+                                    <input type="number" data-calories="100" id="daal" placeholder="0" min="0">
+                                </div>
+                                <div class="form-group">
+                                    <label>Vegetables <span class="cal-label">150 cal/serving</span></label>
+                                    <input type="number" data-calories="150" id="vegetables" placeholder="0" min="0">
+                                </div>
+                                <div class="form-group">
+                                    <label>Pickles <span class="cal-label">50 cal/serving</span></label>
+                                    <input type="number" data-calories="50" id="pickles" placeholder="0" min="0">
+                                </div>
+                                <div class="form-group">
+                                    <label>Non-Veg <span class="cal-label">300 cal/serving</span></label>
+                                    <input type="number" data-calories="300" id="non-veg-lunch" placeholder="0" min="0">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Snacks -->
+                        <div class="meal-section">
+                            <h3 class="meal-title">🍿 Snacks</h3>
+                            <div class="form-grid-compact">
+                                <div class="form-group">
+                                    <label>Momo <span class="cal-label">350 cal/plate</span></label>
+                                    <input type="number" data-calories="350" id="momo" placeholder="0" min="0">
+                                </div>
+                                <div class="form-group">
+                                    <label>Chips <span class="cal-label">150 cal/pack</span></label>
+                                    <input type="number" data-calories="150" id="chips" placeholder="0" min="0">
+                                </div>
+                                <div class="form-group">
+                                    <label>Samosa <span class="cal-label">200 cal/piece</span></label>
+                                    <input type="number" data-calories="200" id="samosa" placeholder="0" min="0">
+                                </div>
+                                <div class="form-group">
+                                    <label>Noodles <span class="cal-label">250 cal/serving</span></label>
+                                    <input type="number" data-calories="250" id="noodles" placeholder="0" min="0">
+                                </div>
+                                <div class="form-group">
+                                    <label>Roti <span class="cal-label">120 cal/piece</span></label>
+                                    <input type="number" data-calories="120" id="roti" placeholder="0" min="0">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Dinner -->
+                        <div class="meal-section">
+                            <h3 class="meal-title">🌙 Dinner</h3>
+                            <div class="form-grid-compact">
+                                <div class="form-group">
+                                    <label>Rice <span class="cal-label">200 cal/cup</span></label>
+                                    <input type="number" data-calories="200" id="dinner-rice" placeholder="0" min="0">
+                                </div>
+                                <div class="form-group">
+                                    <label>Daal <span class="cal-label">100 cal/cup</span></label>
+                                    <input type="number" data-calories="100" id="dinner-daal" placeholder="0" min="0">
+                                </div>
+                                <div class="form-group">
+                                    <label>Curry <span class="cal-label">250 cal/serving</span></label>
+                                    <input type="number" data-calories="250" id="curry" placeholder="0" min="0">
+                                </div>
+                                <div class="form-group">
+                                    <label>Chicken <span class="cal-label">300 cal/serving</span></label>
+                                    <input type="number" data-calories="300" id="chicken" placeholder="0" min="0">
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn-primary">Calculate Total Calories</button>
+                    </form>
+                    <div id="food-calorie-result" class="result-display"></div>
+                </div>
+            </section>
+
+            <!-- Reports Section -->
+            <section class="content-section" id="report">
+                <div class="section-header">
+                    <h1>Calorie Reports</h1>
+                    <p>View and manage your daily calorie records</p>
+                </div>
+
+                <div class="content-card">
+                    <div class="action-buttons">
+                        <button id="store-btn" class="btn-primary">💾 Store Data</button>
+                        <button id="display-btn" class="btn-secondary">📊 Display Report</button>
+                    </div>
+
+                    <!-- Eating Pattern Charts -->
+                    <div id="chart-container" class="chart-container" style="display: none;">
+                        <div class="chart-grid">
+                            <div class="chart-card">
+                                <h3 class="chart-title">📊 Daily Calorie Trends</h3>
+                                <p class="chart-subtitle">Track your calorie intake over time</p>
+                                <canvas id="calorieChart"></canvas>
+                            </div>
+                            <div class="chart-card">
+                                <h3 class="chart-title">🍽️ Meal Distribution</h3>
+                                <p class="chart-subtitle">Average calories by meal category</p>
+                                <canvas id="mealDistributionChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="table-container">
+                        <table class="modern-table" id="calorie-table">
+                            <thead>
+                                <tr>
+                                    <th>Breakfast</th>
+                                    <th>Lunch</th>
+                                    <th>Snacks</th>
+                                    <th>Dinner</th>
+                                    <th>Total</th>
+                                    <th>Required</th>
+                                    <th>Surplus</th>
+                                    <th>Deficit</th>
+                                    <th>Date</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 7-Day Analysis Section -->
+            <section class="content-section" id="7day-analysis">
+                <div class="section-header">
+                    <h1>7-Day Progress Analysis</h1>
+                    <p>Track your weekly calorie trends with moving average</p>
+                </div>
+
+                <div class="content-card">
+                    <button id="analyze-btn" class="btn-primary btn-large">📈 Analyze My Progress</button>
+                    
+                    <div id="analysis-result" class="analysis-result" style="display: none;">
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <div class="stat-icon">📅</div>
+                                <div class="stat-content">
+                                    <p class="stat-label">Days Analyzed</p>
+                                    <p class="stat-value" id="day-count">-</p>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon">🔢</div>
+                                <div class="stat-content">
+                                    <p class="stat-label">Total Calories</p>
+                                    <p class="stat-value" id="total-calories">-</p>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon">📊</div>
+                                <div class="stat-content">
+                                    <p class="stat-label">Daily Average</p>
+                                    <p class="stat-value" id="avg-calories">-</p>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon">🎯</div>
+                                <div class="stat-content">
+                                    <p class="stat-label">Required Daily</p>
+                                    <p class="stat-value" id="req-calories">-</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="status-badge-new" id="status-badge">
+                            <h3 id="intake-status">-</h3>
+                        </div>
+                        
+                        <div class="recommendation-card">
+                            <div class="recommendation-icon">💡</div>
+                            <div class="recommendation-content">
+                                <h4>Recommendation</h4>
+                                <p id="recommendation-text">-</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Food Recommendations Section -->
+            <section class="content-section" id="recommendations">
+                <div class="section-header">
+                    <h1>Food Recommendations</h1>
+                    <p>Smart food suggestions based on your calorie intake</p>
+                </div>
+
+                <div class="content-card">
+                    <button id="get-recommendations-btn" class="btn-primary">🍽️ Get Food Recommendations</button>
+                    
+                    <div id="recommendation-status" class="recommendation-status" style="display:none;">
+                        <div class="status-info">
+                            <h3 id="rec-message"></h3>
+                            <div class="calorie-stats">
+                                <div class="stat-item">
+                                    <span class="stat-label">Your Intake:</span>
+                                    <span class="stat-value" id="rec-total-cal">-</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-label">Daily Goal:</span>
+                                    <span class="stat-value" id="rec-goal-cal">-</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-label">Status:</span>
+                                    <span class="stat-value" id="rec-status">-</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="food-recommendations" class="food-recommendations"></div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="../assets/js/dashboard.js"></script>
+    <script>
+        // Enhanced menu navigation
+        document.querySelectorAll('.menu-item').forEach(item => {
+            item.addEventListener('click', function(e) {
+                e.preventDefault();
+                const section = this.dataset.section;
+                
+                // Update active menu item
+                document.querySelectorAll('.menu-item').forEach(i => i.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Show corresponding section
+                document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
+                document.getElementById(section).classList.add('active');
+            });
+        });
+    </script>
+
+    <script>
+        // Fetch and display user information
+        fetch('../api/get_user_info.php')
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    document.getElementById('userName').textContent = data.data.fullname;
+                }
+            })
+            .catch(error => console.error('Error fetching user info:', error));
+    </script>
+</body>
+</html>

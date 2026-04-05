@@ -1,9 +1,21 @@
 <?php
-// Connect to the database
-$con = mysqli_connect('localhost', 'root', '', 'project1');
+/**
+ * User Registration Handler
+ * Creates new user account with encrypted password
+ */
 
-if (!$con) {
-    die("Database connection failed: " . mysqli_connect_error());
+require_once '../config/database.php';
+
+// If accessed directly via GET, redirect to registration page
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    header("Location: ../pages/registration.html");
+    exit();
+}
+
+try {
+    $con = getDatabaseConnection();
+} catch (Exception $e) {
+    die("Database connection failed: " . $e->getMessage());
 }
 
 // Retrieve form data
@@ -22,7 +34,7 @@ if ($password !== $confirm_password) {
 $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
 // Insert into the database
-$sql = "INSERT INTO registration (fullname, phonenumber, email, password, confirmpassword) 
+$sql = "INSERT INTO register (fullname, phonenumber, email, password, confirmpassword) 
         VALUES ('$fullname', '$phone_number', '$email', '$hashed_password', '$confirm_password')";
 
 $res = mysqli_query($con, $sql);
@@ -31,7 +43,7 @@ if (!$res) {
     die("Insertion failed: " . mysqli_error($con));
 } else {
     // Redirect to home page after successful registration
-    header("Location: home.html");
+    header("Location: ../pages/home.html");
     exit();
 }
 

@@ -1,25 +1,29 @@
 <?php
+/**
+ * Dashboard Data API
+ * Fetches user's calorie history
+ */
+
+require_once '../config/database.php';
+
 session_start();
 
-// Database connection
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "calorie_tracker";
-
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+try {
+    $conn = getDatabaseConnection();
+} catch (Exception $e) {
+    header('Content-Type: application/json');
+    echo json_encode([
+        'success' => false,
+        'message' => 'Database connection failed: ' . $e->getMessage()
+    ]);
+    exit();
 }
 
 // Check if user is logged in
 if (!isset($_SESSION['user_id'])) {
     // Redirect to login page with a message
     $_SESSION['msg'] = "Please log in first.";
-    header("Location: login.php");
+    header("Location: ../auth/login.php");
     exit();
 }
 

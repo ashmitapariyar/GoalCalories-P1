@@ -1,16 +1,19 @@
 <?php
-// Database connection
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "calorie_tracker";
+/**
+ * User Report API
+ * Fetches user's calorie data for reporting
+ */
 
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
+require_once '../config/database.php';
 
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+try {
+    $conn = getDatabaseConnection();
+} catch (Exception $e) {
+    echo json_encode([
+        'success' => false,
+        'message' => 'Database connection failed: ' . $e->getMessage()
+    ]);
+    exit();
 }
 
 // Assuming you're using session-based login
